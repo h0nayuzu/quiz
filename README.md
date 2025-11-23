@@ -55,7 +55,7 @@
 > :warning: If **Windows 7** and **8** support is important for your project, you should know that Electron in a version greater than 22x no longer supports it. You can read more about it [here](https://www.electronjs.org/docs/latest/breaking-changes#removed-windows-7--8--81-support). Therefore, you must downgrade Electron to 22x version if it's important for you!
 
 # <img src="./docs/images/bullet.svg" width="19" /> Requirements
-- [Node.js 20](https://nodejs.org/en/download/)
+- [Node.js 22](https://nodejs.org/en/download/)
 - [pnpm 10](https://pnpm.io/installation)
 
 # <img src="./docs/images/bullet.svg" width="19" /> Installation
@@ -132,6 +132,14 @@ The builded apps will be available in the `dist` folder.
     <td valign="center">
       <p align="center">
         <a href="./docs/FAQ.md">FAQ - Frequently Asked Questions</a>
+      </p>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="center" >
+      <p align="center">
+        <a href="./docs/THEMING.md">Theming</a>
       </p>
     </td>
   </tr>
