@@ -55,13 +55,12 @@ export default defineConfig({
     plugins: [
       tsconfigPaths,
       tailwindcss(),
-      reactPlugin(),
-
       codeInspectorPlugin({
         bundler: 'vite',
         hotKeys: ['altKey'],
         hideConsole: true,
       }),
+      reactPlugin(),
     ],
 
     publicDir: resolve(resources, 'public'),
