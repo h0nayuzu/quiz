@@ -19,7 +19,9 @@ export async function MainWindow() {
     autoHideMenuBar: true,
 
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../preload/index.mjs'),
+      // necessary for mjs support in preload scripts
+      sandbox: false,
     },
   })
 

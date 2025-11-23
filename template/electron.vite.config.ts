@@ -19,6 +19,7 @@ const tsconfigPaths = tsconfigPathsPlugin({
 
 export default defineConfig({
   main: {
+    mode: 'es2022',
     plugins: [tsconfigPaths, externalizeDepsPlugin()],
 
     build: {
@@ -29,16 +30,23 @@ export default defineConfig({
 
         output: {
           dir: resolve(devPath, 'main'),
+          format: 'es',
         },
       },
     },
   },
 
   preload: {
+    mode: 'es2022',
     plugins: [tsconfigPaths, externalizeDepsPlugin()],
 
     build: {
-      outDir: resolve(devPath, 'preload'),
+      rollupOptions: {
+        output: {
+          dir: resolve(devPath, 'preload'),
+          format: 'es',
+        },
+      },
     },
   },
 

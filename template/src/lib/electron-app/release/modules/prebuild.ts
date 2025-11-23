@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/correctness/noUnusedVariables: <> */
 import { writeFile } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { resolve, extname } from 'node:path'
 
 import trustedDependencies from '../../../../../trusted-dependencies-scripts.json'
 import packageJSON from '../../../../../package.json'
@@ -10,7 +10,7 @@ async function createPackageJSONDistVersion() {
   const { main, scripts, resources, devDependencies, ...rest } = packageJSON
 
   const packageJSONDistVersion = {
-    main: './main/index.js',
+    main: `./main/index${extname(main)}`,
     ...rest,
   }
 
