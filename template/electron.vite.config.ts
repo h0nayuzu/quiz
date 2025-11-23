@@ -44,7 +44,6 @@ export default defineConfig({
       rollupOptions: {
         output: {
           dir: resolve(devPath, 'preload'),
-          format: 'es',
         },
       },
     },
