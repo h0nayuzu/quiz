@@ -1,4 +1,4 @@
-import initSqlJs, { Database } from 'sql.js'
+import initSqlJs, { type Database } from 'sql.js'
 import { app } from 'electron'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -18,9 +18,21 @@ export async function initializeDatabase(): Promise<void> {
     SQL = await initSqlJs({
       locateFile: (file: string) => {
         if (app.isPackaged) {
-          return path.join(process.resourcesPath, 'app.asar.unpacked/node_modules/sql.js/dist', file)
+          return path.join(
+            process.resourcesPath,
+            'app.asar.unpacked/node_modules/sql.js/dist',
+            file
+          )
         }
-        return path.join(__dirname, '../../sql.js/dist', file)
+        // In development, use require.resolve to find the actual module location
+        try {
+          const sqlJsPath = require.resolve('sql.js')
+          const sqlJsDir = path.dirname(sqlJsPath)
+          return path.join(sqlJsDir, file)
+        } catch (error) {
+          // Fallback to node_modules path
+          return path.join(app.getAppPath(), 'node_modules/sql.js/dist', file)
+        }
       },
     })
 
@@ -142,7 +154,11 @@ function saveDatabase(): void {
 /**
  * Import questions from Excel into database
  */
-export function importQuestions(questions: Question[]): { success: boolean; count: number; error?: string } {
+export function importQuestions(questions: Question[]): {
+  success: boolean
+  count: number
+  error?: string
+} {
   if (!db) {
     return { success: false, count: 0, error: 'Database not initialized' }
   }
@@ -215,7 +231,7 @@ export function getQuestionsByCategory(category: string): Question[] {
   const results: Question[] = []
   while (stmt.step()) {
     const row = stmt.getAsObject()
-    results.push(row as Question)
+    results.push(row as unknown as Question)
   }
 
   stmt.free()
@@ -234,7 +250,7 @@ export function getQuestionsByType(type: string): Question[] {
   const results: Question[] = []
   while (stmt.step()) {
     const row = stmt.getAsObject()
-    results.push(row as Question)
+    results.push(row as unknown as Question)
   }
 
   stmt.free()
@@ -253,7 +269,7 @@ export function getRandomQuestions(count: number): Question[] {
   const results: Question[] = []
   while (stmt.step()) {
     const row = stmt.getAsObject()
-    results.push(row as Question)
+    results.push(row as unknown as Question)
   }
 
   stmt.free()
@@ -276,7 +292,7 @@ export function getMistakeQuestions(): Question[] {
   const results: Question[] = []
   while (stmt.step()) {
     const row = stmt.getAsObject()
-    results.push(row as Question)
+    results.push(row as unknown as Question)
   }
 
   stmt.free()
@@ -298,7 +314,7 @@ export function getFavoriteQuestions(): Question[] {
   const results: Question[] = []
   while (stmt.step()) {
     const row = stmt.getAsObject()
-    results.push(row as Question)
+    results.push(row as unknown as Question)
   }
 
   stmt.free()
@@ -321,7 +337,7 @@ export function searchQuestions(keyword: string): Question[] {
   const results: Question[] = []
   while (stmt.step()) {
     const row = stmt.getAsObject()
-    results.push(row as Question)
+    results.push(row as unknown as Question)
   }
 
   stmt.free()
@@ -342,7 +358,9 @@ export function recordAnswer(
 
   try {
     // Check if progress record exists
-    const checkStmt = db.prepare('SELECT id, attempt_count FROM user_progress WHERE question_id = ?')
+    const checkStmt = db.prepare(
+      'SELECT id, attempt_count FROM user_progress WHERE question_id = ?'
+    )
     checkStmt.bind([questionId])
 
     if (checkStmt.step()) {
@@ -380,13 +398,23 @@ export function recordAnswer(
 /**
  * Toggle favorite status
  */
-export function toggleFavorite(questionId: number): { success: boolean; isFavorite: boolean; error?: string } {
+export function toggleFavorite(questionId: number): {
+  success: boolean
+  isFavorite: boolean
+  error?: string
+} {
   if (!db) {
-    return { success: false, isFavorite: false, error: 'Database not initialized' }
+    return {
+      success: false,
+      isFavorite: false,
+      error: 'Database not initialized',
+    }
   }
 
   try {
-    const checkStmt = db.prepare('SELECT id FROM favorites WHERE question_id = ?')
+    const checkStmt = db.prepare(
+      'SELECT id FROM favorites WHERE question_id = ?'
+    )
     checkStmt.bind([questionId])
 
     const exists = checkStmt.step()
@@ -397,12 +425,11 @@ export function toggleFavorite(questionId: number): { success: boolean; isFavori
       db.run('DELETE FROM favorites WHERE question_id = ?', [questionId])
       saveDatabase()
       return { success: true, isFavorite: false }
-    } else {
-      // Add to favorites
-      db.run('INSERT INTO favorites (question_id) VALUES (?)', [questionId])
-      saveDatabase()
-      return { success: true, isFavorite: true }
     }
+    // Add to favorites
+    db.run('INSERT INTO favorites (question_id) VALUES (?)', [questionId])
+    saveDatabase()
+    return { success: true, isFavorite: true }
   } catch (error) {
     return {
       success: false,
@@ -430,13 +457,18 @@ export function isFavorite(questionId: number): boolean {
 /**
  * Save mistake note
  */
-export function saveMistakeNote(questionId: number, note: string): { success: boolean; error?: string } {
+export function saveMistakeNote(
+  questionId: number,
+  note: string
+): { success: boolean; error?: string } {
   if (!db) {
     return { success: false, error: 'Database not initialized' }
   }
 
   try {
-    const checkStmt = db.prepare('SELECT id FROM mistake_notes WHERE question_id = ?')
+    const checkStmt = db.prepare(
+      'SELECT id FROM mistake_notes WHERE question_id = ?'
+    )
     checkStmt.bind([questionId])
 
     if (checkStmt.step()) {
@@ -447,7 +479,10 @@ export function saveMistakeNote(questionId: number, note: string): { success: bo
       )
     } else {
       // Insert new note
-      db.run('INSERT INTO mistake_notes (question_id, note) VALUES (?, ?)', [questionId, note])
+      db.run('INSERT INTO mistake_notes (question_id, note) VALUES (?, ?)', [
+        questionId,
+        note,
+      ])
     }
 
     checkStmt.free()
@@ -468,7 +503,9 @@ export function saveMistakeNote(questionId: number, note: string): { success: bo
 export function getMistakeNote(questionId: number): string | null {
   if (!db) return null
 
-  const stmt = db.prepare('SELECT note FROM mistake_notes WHERE question_id = ?')
+  const stmt = db.prepare(
+    'SELECT note FROM mistake_notes WHERE question_id = ?'
+  )
   stmt.bind([questionId])
 
   if (stmt.step()) {
@@ -498,9 +535,9 @@ export function getCategories(): { category: string; count: number }[] {
 
   while (stmt.step()) {
     const row = stmt.getAsObject()
-    results.push({ 
+    results.push({
       category: row.category as string,
-      count: row.count as number
+      count: row.count as number,
     })
   }
 
@@ -533,17 +570,23 @@ export function getStatistics(): {
   const totalQuestions = (totalStmt.getAsObject().count as number) || 0
   totalStmt.free()
 
-  const attemptedStmt = db.prepare('SELECT COUNT(DISTINCT question_id) as count FROM user_progress')
+  const attemptedStmt = db.prepare(
+    'SELECT COUNT(DISTINCT question_id) as count FROM user_progress'
+  )
   attemptedStmt.step()
   const attemptedQuestions = (attemptedStmt.getAsObject().count as number) || 0
   attemptedStmt.free()
 
-  const correctStmt = db.prepare('SELECT COUNT(*) as count FROM user_progress WHERE is_correct = 1')
+  const correctStmt = db.prepare(
+    'SELECT COUNT(*) as count FROM user_progress WHERE is_correct = 1'
+  )
   correctStmt.step()
   const correctAnswers = (correctStmt.getAsObject().count as number) || 0
   correctStmt.free()
 
-  const mistakeStmt = db.prepare('SELECT COUNT(DISTINCT question_id) as count FROM user_progress WHERE is_correct = 0')
+  const mistakeStmt = db.prepare(
+    'SELECT COUNT(DISTINCT question_id) as count FROM user_progress WHERE is_correct = 0'
+  )
   mistakeStmt.step()
   const mistakeCount = (mistakeStmt.getAsObject().count as number) || 0
   mistakeStmt.free()
