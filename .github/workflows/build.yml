@@ -32,7 +32,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 10
       
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -49,12 +49,16 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       
-      - name: Build application
-        run: pnpm run build
+      - name: Compile application
+        run: pnpm run prebuild
+      
+      - name: Package application
+        run: pnpm electron-builder --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        timeout-minutes: 30
       
       - name: Upload artifacts (macOS)
         if: matrix.os == 'macos-latest'
