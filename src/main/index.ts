@@ -1,5 +1,7 @@
 import { app } from 'electron'
 
+app.disableHardwareAcceleration()
+
 import { makeAppWithSingleInstanceLock } from 'lib/electron-app/factories/app/instance'
 import { makeAppSetup } from 'lib/electron-app/factories/app/setup'
 import { loadReactDevtools } from 'lib/electron-app/utils'
@@ -12,7 +14,7 @@ makeAppWithSingleInstanceLock(async () => {
   const window = await makeAppSetup(MainWindow)
 
   if (ENVIRONMENT.IS_DEV) {
-    await loadReactDevtools()
+    // await loadReactDevtools()
     /* This trick is necessary to get the new
       React Developer Tools working at app initial load.
       Otherwise, it only works on manual reload.

@@ -8,7 +8,7 @@ declare global {
 
 const API = {
   sayHelloFromBridge: () => console.log('\nHello from bridgeAPI! 👋\n\n'),
-  username: process.env.USER,
+  username: 'User', // 暂时硬编码以排除 process.env 的干扰
 }
 
 contextBridge.exposeInMainWorld('App', API)
