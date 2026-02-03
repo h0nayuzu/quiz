@@ -10,6 +10,7 @@
 /build
 /dist
 /out
+/.out
 
 # misc
 .DS_Store
