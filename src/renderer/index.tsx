@@ -2,6 +2,7 @@ import ReactDom from 'react-dom/client'
 import React from 'react'
 
 import { AppRoutes } from './routes'
+import { ThemeProvider } from './contexts/ThemeContext'
 import './globals.css'
 
 console.log('index.tsx: Start')
@@ -12,7 +13,9 @@ if (appRoot) {
   console.log('index.tsx: Root found, rendering AppRoutes')
   ReactDom.createRoot(appRoot).render(
     <React.StrictMode>
-      <AppRoutes />
+      <ThemeProvider>
+        <AppRoutes />
+      </ThemeProvider>
     </React.StrictMode>
   )
 } else {

@@ -9,17 +9,20 @@ export async function MainWindow() {
   const window = createWindow({
     id: 'main',
     title: displayName,
-    width: 700,
-    height: 473,
-    show: false,
+    width: 1200,
+    height: 800,
+    show: true,
     center: true,
     movable: true,
-    resizable: false,
-    alwaysOnTop: true,
+    resizable: true,
+    alwaysOnTop: false,
     autoHideMenuBar: true,
+    backgroundColor: '#000000',
 
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
     },
   })
 
@@ -27,8 +30,6 @@ export async function MainWindow() {
     if (ENVIRONMENT.IS_DEV) {
       window.webContents.openDevTools({ mode: 'detach' })
     }
-
-    window.show()
   })
 
   window.on('close', () => {

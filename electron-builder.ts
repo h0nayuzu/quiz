@@ -2,7 +2,6 @@
 import type { Configuration } from 'electron-builder'
 
 import {
-  main,
   name,
   version,
   resources,
@@ -10,8 +9,6 @@ import {
   displayName,
   author as _author,
 } from './package.json'
-
-import { getDevFolder } from './src/lib/electron-app/release/utils/path'
 
 const author = _author?.name ?? _author
 const currentYear = new Date().getFullYear()
@@ -26,15 +23,24 @@ export default {
   copyright: `Copyright © ${currentYear} — ${author}`,
 
   directories: {
-    app: getDevFolder(main),
     output: `dist/v${version}`,
   },
+
+  files: [
+    '.out/**/*',
+    'package.json',
+  ],
+
+  asarUnpack: [
+    '.out/main/services/**/*',
+  ],
 
   mac: {
     artifactName,
     icon: `${resources}/build/icons/icon.icns`,
     category: 'public.app-category.utilities',
     target: ['zip', 'dmg', 'dir'],
+    asar: false,
   },
 
   linux: {

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <title>刷题应用 - 移动版</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    .container {
+      max-width: 768px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .header {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      background: #3b82f6;
+      cursor: pointer;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .button:active {
+      transform: scale(0.98);
+      opacity: 0.8;
+    }
+
+    .button-secondary {
+      background: #6b7280;
+    }
+
+    .button-success {
+      background: #10b981;
+    }
+
+    .question-card {
+      margin-bottom: 1rem;
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .option {
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .option:active {
+      transform: scale(0.98);
+    }
+
+    .option.selected {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .option.correct {
+      border-color: #10b981;
+      background: #d1fae5;
+    }
+
+    .option.incorrect {
+      border-color: #ef4444;
+      background: #fee2e2;
+    }
+
+    .result {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .result.correct {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .result.incorrect {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #3b82f6;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .progress {
+      width: 100%;
+      height: 0.5rem;
+      background: #e5e7eb;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #3b82f6;
+      transition: width 0.3s;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0.5rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      .button {
+        padding: 0.875rem;
+      }
+
+      .question-text {
+        font-size: 1rem;
+      }
+
+      .header h1 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎯 刷题应用</h1>
+      <p>随时随地，轻松刷题</p>
+    </div>
+
+    <!-- 首页 -->
+    <div id="home-page">
+      <div class="card">
+        <h2 style="margin-bottom: 1rem; color: #333;">选择模式</h2>
+        <button class="button" onclick="startRandomQuiz()">📝 随机练习</button>
+        <button class="button button-secondary" onclick="showStats()">📊 查看统计</button>
+      </div>
+    </div>
+
+    <!-- 题目页面 -->
+    <div id="quiz-page" class="hidden">
+      <div class="card">
+        <div id="progress-container">
+          <div class="progress">
+            <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+          </div>
+          <p id="progress-text" style="text-align: center; color: #666; margin-bottom: 1rem;">题目 1 / 10</p>
+        </div>
+
+        <div id="question-container"></div>
+
+        <button id="next-button" class="button hidden" onclick="nextQuestion()">下一题</button>
+        <button id="finish-button" class="button button-success hidden" onclick="finishQuiz()">完成</button>
+        <button class="button button-secondary" onclick="backToHome()">返回首页</button>
+      </div>
+    </div>
+
+    <!-- 统计页面 -->
+    <div id="stats-page" class="hidden">
+      <div class="card">
+        <h2 style="margin-bottom: 1rem; color: #333;">📊 学习统计</h2>
+        <div class="stats" id="stats-container">
+          <div class="stat-item">
+            <div class="stat-value" id="total-questions">-</div>
+            <div class="stat-label">总题数</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="practiced-count">-</div>
+            <div class="stat-label">已练习</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="correct-rate">-</div>
+            <div class="stat-label">正确率</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="avg-score">-</div>
+            <div class="stat-label">平均分</div>
+          </div>
+        </div>
+        <button class="button" onclick="backToHome()">返回首页</button>
+      </div>
+    </div>
+
+    <!-- 加载提示 -->
+    <div id="loading" class="loading hidden">
+      <p>加载中...</p>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = window.location.origin;
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let userAnswers = [];
+    let score = 0;
+
+    // 显示/隐藏页面
+    function showPage(pageId) {
+      document.querySelectorAll('[id$="-page"]').forEach(page => page.classList.add('hidden'));
+      document.getElementById(pageId).classList.remove('hidden');
+    }
+
+    function showLoading() {
+      document.getElementById('loading').classList.remove('hidden');
+    }
+
+    function hideLoading() {
+      document.getElementById('loading').classList.add('hidden');
+    }
+
+    // 返回首页
+    function backToHome() {
+      showPage('home-page');
+      currentQuestions = [];
+      currentIndex = 0;
+      userAnswers = [];
+      score = 0;
+    }
+
+    // 开始随机练习
+    async function startRandomQuiz() {
+      showLoading();
+      try {
+        const response = await fetch(`${API_BASE}/api/database/questions/random/10`);
+        const data = await response.json();
+        
+        if (data && data.length > 0) {
+          currentQuestions = data;
+          currentIndex = 0;
+          userAnswers = [];
+          score = 0;
+          showPage('quiz-page');
+          displayQuestion();
+        } else {
+          alert('没有找到题目，请先导入题库');
+        }
+      } catch (error) {
+        console.error('加载题目失败:', error);
+        alert('加载题目失败，请检查服务器连接');
+      } finally {
+        hideLoading();
+      }
+    }
+
+    // 显示题目
+    function displayQuestion() {
+      const question = currentQuestions[currentIndex];
+      const container = document.getElementById('question-container');
+      
+      // 更新进度
+      const progress = ((currentIndex + 1) / currentQuestions.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('progress-text').textContent = `题目 ${currentIndex + 1} / ${currentQuestions.length}`;
+      
+      // 显示题目
+      let html = `
+        <div class="question-card">
+          <div class="question-text">${currentIndex + 1}. ${question.question}</div>
+          ${question.options.map((opt, i) => `
+            <div class="option" onclick="selectOption(${i})" id="option-${i}">
+              ${String.fromCharCode(65 + i)}. ${opt}
+            </div>
+          `).join('')}
+        </div>
+        <div id="result-container"></div>
+      `;
+      
+      container.innerHTML = html;
+      document.getElementById('next-button').classList.add('hidden');
+      document.getElementById('finish-button').classList.add('hidden');
+    }
+
+    // 选择选项
+    async function selectOption(optionIndex) {
+      const question = currentQuestions[currentIndex];
+      const correctIndex = question.options.indexOf(question.correctAnswer);
+      const isCorrect = optionIndex === correctIndex;
+      
+      // 标记答案
+      document.querySelectorAll('.option').forEach((opt, i) => {
+        opt.style.pointerEvents = 'none';
+        if (i === correctIndex) {
+          opt.classList.add('correct');
+        } else if (i === optionIndex && !isCorrect) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      // 显示结果
+      const resultContainer = document.getElementById('result-container');
+      resultContainer.innerHTML = `
+        <div class="result ${isCorrect ? 'correct' : 'incorrect'}">
+          ${isCorrect ? '✅ 回答正确！' : '❌ 回答错误'}
+          ${question.explanation ? `<p style="margin-top: 0.5rem; font-size: 0.9rem;">${question.explanation}</p>` : ''}
+        </div>
+      `;
+      
+      // 记录答案
+      userAnswers.push({
+        questionId: question.id,
+        correct: isCorrect
+      });
+      
+      if (isCorrect) {
+        score++;
+      }
+      
+      // 更新统计
+      try {
+        await fetch(`${API_BASE}/api/database/stats/update`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            questionId: question.id,
+            correct: isCorrect
+          })
+        });
+      } catch (error) {
+        console.error('更新统计失败:', error);
+      }
+      
+      // 显示下一题按钮
+      if (currentIndex < currentQuestions.length - 1) {
+        document.getElementById('next-button').classList.remove('hidden');
+      } else {
+        document.getElementById('finish-button').classList.remove('hidden');
+      }
+    }
+
+    // 下一题
+    function nextQuestion() {
+      currentIndex++;
+      displayQuestion();
+    }
+
+    // 完成测验
+    function finishQuiz() {
+      const percentage = Math.round((score / currentQuestions.length) * 100);
+      alert(`测验完成！\n\n总题数：${currentQuestions.length}\n正确：${score}\n错误：${currentQuestions.length - score}\n正确率：${percentage}%`);
+      backToHome();
+    }
+
+    // 查看统计
+    async function showStats() {
+      showLoading();
+      try {
+        const response = await fetch(`${API_BASE}/api/database/stats`);
+        const stats = await response.json();
+        
+        document.getElementById('total-questions').textContent = stats.totalQuestions || 0;
+        document.getElementById('practiced-count').textContent = stats.practicedCount || 0;
+        document.getElementById('correct-rate').textContent = 
+          stats.correctRate !== undefined ? `${Math.round(stats.correctRate)}%` : '-';
+        document.getElementById('avg-score').textContent = 
+          stats.averageScore !== undefined ? Math.round(stats.averageScore) : '-';
+        
+        showPage('stats-page');
+      } catch (error) {
+        console.error('加载统计失败:', error);
+        alert('加载统计失败，请检查服务器连接');
+      } finally {
+        hideLoading();
+      }
+    }
+
+    // 页面加载完成后的初始化
+    window.addEventListener('load', () => {
+      console.log('移动端页面已加载');
+    });
+  </script>
+</body>
+</html>

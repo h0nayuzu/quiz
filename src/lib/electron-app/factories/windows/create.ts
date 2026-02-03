@@ -8,9 +8,11 @@ export function createWindow({ id, ...settings }: WindowProps) {
   const window = new BrowserWindow(settings)
 
   if (ENVIRONMENT.IS_DEV) {
-    window.loadURL(`http://localhost:4927/#/`)
+    window.loadURL(`http://localhost:4927/${id}`)
   } else {
-    window.loadFile(join(__dirname, '../renderer/index.html'))
+    window.loadFile(join(__dirname, '../renderer/index.html'), {
+      hash: `/${id}`
+    })
   }
 
   window.on('closed', window.destroy)

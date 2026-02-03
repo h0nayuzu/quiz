@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-@plugin "tailwindcss-animate";
-
-@custom-variant dark (&:is(.dark *));
-
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -41,38 +37,73 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: oklch(0.18 0 0);
+  --foreground: oklch(0.88 0 0);
+  --card: oklch(0.23 0 0);
+  --card-foreground: oklch(0.88 0 0);
+  --popover: oklch(0.23 0 0);
+  --popover-foreground: oklch(0.88 0 0);
+  --primary: oklch(0.65 0.2 250);
+  --primary-foreground: oklch(0.95 0 0);
+  --secondary: oklch(0.32 0 0);
+  --secondary-foreground: oklch(0.88 0 0);
+  --muted: oklch(0.28 0 0);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.35 0 0);
+  --accent-foreground: oklch(0.88 0 0);
+  --destructive: oklch(0.6 0.22 30);
+  --destructive-foreground: oklch(0.95 0 0);
+  --border: oklch(0.38 0 0);
+  --input: oklch(0.32 0 0);
+  --ring: oklch(0.65 0.15 250);
+  --chart-1: oklch(0.65 0.2 250);
+  --chart-2: oklch(0.65 0.18 180);
+  --chart-3: oklch(0.7 0.18 120);
+  --chart-4: oklch(0.65 0.2 300);
+  --chart-5: oklch(0.7 0.2 60);
+  --sidebar: oklch(0.23 0 0);
+  --sidebar-foreground: oklch(0.88 0 0);
+  --sidebar-primary: oklch(0.65 0.2 250);
+  --sidebar-primary-foreground: oklch(0.95 0 0);
+  --sidebar-accent: oklch(0.32 0 0);
+  --sidebar-accent-foreground: oklch(0.88 0 0);
+  --sidebar-border: oklch(0.38 0 0);
+  --sidebar-ring: oklch(0.65 0.15 250);
+}
+
+.eye-care {
+  --background: oklch(0.95 0.02 120);
+  --foreground: oklch(0.2 0 0);
+  --card: oklch(0.93 0.02 120);
+  --card-foreground: oklch(0.2 0 0);
+  --popover: oklch(0.93 0.02 120);
+  --popover-foreground: oklch(0.2 0 0);
+  --primary: oklch(0.4 0.15 150);
+  --primary-foreground: oklch(0.98 0.01 120);
+  --secondary: oklch(0.85 0.03 120);
+  --secondary-foreground: oklch(0.25 0 0);
+  --muted: oklch(0.88 0.03 120);
+  --muted-foreground: oklch(0.45 0 0);
+  --accent: oklch(0.85 0.03 120);
+  --accent-foreground: oklch(0.25 0 0);
+  --destructive: oklch(0.5 0.2 40);
+  --destructive-foreground: oklch(0.95 0.02 120);
+  --border: oklch(0.82 0.03 120);
+  --input: oklch(0.82 0.03 120);
+  --ring: oklch(0.5 0.1 150);
+  --chart-1: oklch(0.55 0.15 150);
+  --chart-2: oklch(0.6 0.12 180);
+  --chart-3: oklch(0.5 0.1 200);
+  --chart-4: oklch(0.65 0.15 140);
+  --chart-5: oklch(0.6 0.12 160);
+  --sidebar: oklch(0.92 0.02 120);
+  --sidebar-foreground: oklch(0.2 0 0);
+  --sidebar-primary: oklch(0.4 0.15 150);
+  --sidebar-primary-foreground: oklch(0.98 0.01 120);
+  --sidebar-accent: oklch(0.85 0.03 120);
+  --sidebar-accent-foreground: oklch(0.25 0 0);
+  --sidebar-border: oklch(0.82 0.03 120);
+  --sidebar-ring: oklch(0.5 0.1 150);
 }
 
 @theme inline {
@@ -130,5 +161,343 @@
     scroll-behavior: smooth;
     -webkit-app-region: no-drag;
     -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Markdown 样式 */
+.prose {
+  @apply text-foreground;
+}
+
+.prose p {
+  @apply my-2 leading-relaxed;
+}
+
+.prose strong {
+  @apply font-semibold text-foreground;
+}
+
+.prose em {
+  @apply italic;
+}
+
+.prose code {
+  @apply px-1.5 py-0.5 rounded bg-muted text-foreground text-sm font-mono;
+}
+
+.prose pre {
+  @apply p-4 my-3 rounded-lg bg-muted overflow-x-auto;
+}
+
+.prose pre code {
+  @apply p-0 bg-transparent;
+}
+
+.prose ul {
+  @apply my-2 ml-6 list-disc;
+}
+
+.prose ol {
+  @apply my-2 ml-6 list-decimal;
+}
+
+.prose li {
+  @apply my-1;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary pl-4 my-3 italic text-muted-foreground;
+}
+
+.prose h1 {
+  @apply text-2xl font-bold mt-6 mb-3;
+}
+
+.prose h2 {
+  @apply text-xl font-bold mt-5 mb-2;
+}
+
+.prose h3 {
+  @apply text-lg font-semibold mt-4 mb-2;
+}
+
+.prose h4 {
+  @apply text-base font-semibold mt-3 mb-1;
+}
+
+.prose a {
+  @apply text-primary underline hover:text-primary/80;
+}
+
+.prose table {
+  @apply w-full my-3 border-collapse;
+}
+
+.prose th {
+  @apply border border-border bg-muted px-3 py-2 text-left font-semibold;
+}
+
+.prose td {
+  @apply border border-border px-3 py-2;
+}
+
+.prose hr {
+  @apply my-4 border-border;
+}
+
+/* 暗色模式下的 Markdown 样式调整 */
+.dark .prose code {
+  @apply bg-muted/50;
+}
+
+.dark .prose pre {
+  @apply bg-muted/50;
+}
+
+/* 移动端响应式样式 */
+@layer utilities {
+  /* 移动端基础布局 */
+  @media (max-width: 768px) {
+    body {
+      font-size: 14px;
+    }
+
+    /* 减少内边距 */
+    .container {
+      @apply px-4;
+    }
+
+    /* 按钮适配 */
+    button {
+      @apply min-h-[44px] min-w-[44px];
+    }
+
+    /* 表单输入适配 */
+    input, select, textarea {
+      @apply min-h-[44px] text-base;
+    }
+
+    /* 卡片间距调整 */
+    .card {
+      @apply p-4;
+    }
+
+    /* 网格布局调整 */
+    .grid {
+      @apply gap-3;
+    }
+
+    /* 标题字体大小调整 */
+    h1 {
+      @apply text-xl;
+    }
+
+    h2 {
+      @apply text-lg;
+    }
+
+    h3 {
+      @apply text-base;
+    }
+  }
+
+  /* 小屏手机适配 */
+  @media (max-width: 480px) {
+    body {
+      font-size: 13px;
+    }
+
+    .container {
+      @apply px-3;
+    }
+
+    .card {
+      @apply p-3;
+    }
+
+    /* 更紧凑的间距 */
+    .space-y-4 > * + * {
+      @apply mt-3;
+    }
+
+    .space-y-6 > * + * {
+      @apply mt-4;
+    }
+
+    /* 按钮文字大小 */
+    button {
+      @apply text-sm;
+    }
+  }
+
+  /* 触摸设备优化 */
+  @media (hover: none) and (pointer: coarse) {
+    /* 增大可点击区域 */
+    button, a, input[type="checkbox"], input[type="radio"] {
+      @apply min-h-[44px] min-w-[44px];
+    }
+
+    /* 禁用悬停效果 */
+    .hover\:bg-accent:hover {
+      @apply bg-transparent;
+    }
+
+    /* 添加点击反馈 */
+    button:active, a:active {
+      @apply opacity-70;
+    }
+  }
+
+  /* 横屏模式适配 */
+  @media (max-height: 500px) and (orientation: landscape) {
+    /* 减少垂直间距 */
+    .space-y-6 > * + * {
+      @apply mt-3;
+    }
+
+    .space-y-4 > * + * {
+      @apply mt-2;
+    }
+
+    /* 紧凑的内边距 */
+    .p-6 {
+      @apply p-3;
+    }
+
+    .py-6 {
+      @apply py-2;
+    }
+  }
+
+  /* 响应式文字大小 */
+  .text-responsive-sm {
+    @apply text-xs sm:text-sm;
+  }
+
+  .text-responsive-base {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-lg {
+    @apply text-base sm:text-lg;
+  }
+
+  .text-responsive-xl {
+    @apply text-lg sm:text-xl;
+  }
+
+  .text-responsive-2xl {
+    @apply text-xl sm:text-2xl;
+  }
+
+  /* 响应式间距 */
+  .spacing-responsive {
+    @apply space-y-3 sm:space-y-4 md:space-y-6;
+  }
+
+  .padding-responsive {
+    @apply p-3 sm:p-4 md:p-6;
+  }
+
+  .margin-responsive {
+    @apply m-3 sm:m-4 md:m-6;
+  }
+
+  /* 移动端隐藏/显示 */
+  .mobile-only {
+    @apply block sm:hidden;
+  }
+
+  .desktop-only {
+    @apply hidden sm:block;
+  }
+
+  /* 响应式网格 */
+  .grid-responsive {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+
+  .grid-responsive-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2;
+  }
+
+  /* 移动端全宽 */
+  .mobile-full-width {
+    @apply w-full sm:w-auto;
+  }
+
+  /* 安全区域适配（iOS刘海屏等） */
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-inset-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-inset-right {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* 滚动优化 */
+  .scroll-smooth-mobile {
+    -webkit-overflow-scrolling: touch;
+    @apply scroll-smooth;
+  }
+
+  /* 防止文本选择（移动端） */
+  .no-select-mobile {
+    @apply select-none;
+  }
+
+  /* 移动端卡片阴影减弱 */
+  @media (max-width: 768px) {
+    .shadow-lg {
+      @apply shadow-md;
+    }
+
+    .shadow-xl {
+      @apply shadow-lg;
+    }
+  }
+}
+
+/* Markdown 移动端样式优化 */
+@media (max-width: 768px) {
+  .prose {
+    @apply text-sm;
+  }
+
+  .prose h1 {
+    @apply text-xl mt-4 mb-2;
+  }
+
+  .prose h2 {
+    @apply text-lg mt-3 mb-2;
+  }
+
+  .prose h3 {
+    @apply text-base mt-3 mb-1;
+  }
+
+  .prose pre {
+    @apply text-xs p-3;
+  }
+
+  .prose code {
+    @apply text-xs;
+  }
+
+  .prose table {
+    @apply text-xs;
+  }
+
+  .prose th,
+  .prose td {
+    @apply px-2 py-1;
   }
 }
