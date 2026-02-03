@@ -2,7 +2,7 @@
   "displayName": "quiz",
   "name": "quiz",
   "description": "Your awesome app description",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "./.out/main/index.mjs",
   "resources": "src/resources",
   "author": {
