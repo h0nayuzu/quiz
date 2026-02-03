@@ -31,16 +31,13 @@ export default {
     'package.json',
   ],
 
-  asarUnpack: [
-    '.out/main/services/**/*',
-  ],
+  asar: false,
 
   mac: {
     artifactName,
     icon: `${resources}/build/icons/icon.icns`,
     category: 'public.app-category.utilities',
     target: ['zip', 'dmg', 'dir'],
-    asar: false,
   },
 
   linux: {
