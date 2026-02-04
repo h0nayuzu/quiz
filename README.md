@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  支持 AI 辅助答题 • 模拟考试 • 错题复习 • 移动端访问
+  支持 AI 辅助答题 • 模拟考试 • 错题复习 • 跨平台桌面应用
 </p>
 
 ---
@@ -78,10 +78,10 @@
   - 针对性复习
   - 学习进度追踪
 
-- 📱 **移动端支持**
-  - 内置 Web 服务器
-  - 局域网访问
-  - 响应式设计
+- 💾 **数据管理**
+  - 本地数据存储
+  - 数据备份导出
+  - 安全隐私保护
 
 </td>
 </tr>
@@ -102,7 +102,6 @@
 | 🔀 **路由管理** | Electron Router DOM |
 | 📊 **数据处理** | XLSX (Excel 解析) |
 | 🤖 **AI 集成** | OpenAI SDK (多服务兼容) |
-| 🌐 **Web 服务** | Express.js |
 
 </div>
 
@@ -203,15 +202,6 @@ npm run build:linux # Linux
  └─ 📊 错题复习      → 复习错题集
 ```
 
-### 4️⃣ 移动端访问
-
-1. 启动桌面应用
-2. 查看设置页面显示的访问地址
-3. 在同一局域网的移动设备浏览器中输入地址
-4. 开始使用移动端界面
-
-> 💡 **提示**: 确保设备连接在同一 Wi-Fi 网络下
-
 ---
 
 ## 🏗️ 项目结构
@@ -225,8 +215,7 @@ electron-quiz-app/
 │   │   │   ├── aiService.ts      # 🤖 AI 服务
 │   │   │   ├── databaseService.ts # 🗄️ 数据库服务
 │   │   │   ├── excelService.ts   # 📊 Excel 导入
-│   │   │   ├── settingsService.ts # ⚙️ 设置管理
-│   │   │   └── webServer.ts      # 🌐 Web 服务器
+│   │   │   └── settingsService.ts # ⚙️ 设置管理
 │   │   └── 📂 windows/           # 窗口管理
 │   │
 │   ├── 🔌 preload/               # 预加载脚本
