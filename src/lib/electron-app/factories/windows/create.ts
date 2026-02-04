@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { join } from 'node:path'
 
 import type { WindowProps } from 'shared/types'
@@ -10,8 +10,8 @@ export function createWindow({ id, ...settings }: WindowProps) {
   if (ENVIRONMENT.IS_DEV) {
     window.loadURL(`http://localhost:4927/${id}`)
   } else {
-    window.loadFile(join(__dirname, '../renderer/index.html'), {
-      hash: `/${id}`
+    window.loadFile(join(app.getAppPath(), 'renderer', 'index.html'), {
+      hash: `/${id}`,
     })
   }
 
